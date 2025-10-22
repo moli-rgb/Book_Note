@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .header {
+        width: 100%;
+        height: fit-content;
+        background-color: #1e293b;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      .header-left .left {
+        color: #ffffff;
+        padding-left: 5px;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #ffffff;
+        padding-right: 5px;
+      }
+
+      .header-right h2 {
+        font-size: 1.5rem;
+        color: #ffffff;
+      }
+
+      .header-right-list {
+        display: flex;
+        gap: 5px;
+        padding-left: 0;
+        list-style: none;
+        font-size: 1rem;
+      }
+
+      .header-right-list li button {
+        border: none;
+        background: #3B82F6;
+        padding: 3px 8px;
+        border-radius: 4px;
+      }
+
+      .header-right-list li button:hover {
+        background: #2563EB;
+        transition: background-color 0.3s ease;
+      }
+
+      .header-right-list li a {
+        text-decoration: none;
+        color: #1e293b;
+        font-weight: bold;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        margin-left: auto;
+      }
+
+      .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: #ffffff;
+        margin: 4px 12px 5px 0;
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          justify-content: center;
+
+        }
+
+        .header-right {
+          display: none;
+          flex-direction: column;
+          background-color: #1e293b;
+          position: absolute;
+          top: 80px;
+          right: 10px;
+          padding: 10px;
+          border-radius: 5px;
+        }
+
+        .header-right.active {
+          display: flex;
+        }
+
+        .hamburger {
+          display: flex;
+          position: absolute;
+          right: 15px;
+          top: 15px;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;  
+          margin: 0;
+          padding: 0;
+          height: 50px;
+          width: 50px;
+          transition: background-color 0.3s ease;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <!-- الشمال -->
+      <div class="header-left">
+        <a href="/"><button style="background-color: #1e293b; border: none;" title="Home bage"><h1 class="left" >📖 My book note</h1></button></a>
+      </div>
+
+      <!-- زرار الهامبرجر -->
+      <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <!-- القائمة -->
+      <div class="header-right" id="menu">
+  <h2>Sort by:</h2>
+  <ul class="header-right-list">
+    <% if (page === "book") { %>
+      <li><a href="/book?sort=title"><button>Title</button></a></li>
+      <li><a href="/book?sort=author"><button>Author</button></a></li>
+      <li><a href="/book?sort=rating"><button>Rating</button></a></li>
+    <% } else { %>
+      <li><a href="/?sort=title"><button>Title</button></a></li>
+      <li><a href="/?sort=author"><button>Author</button></a></li>
+      <li><a href="/?sort=rating"><button>Rating</button></a></li>
+    <% } %>
+  </ul>
+</div>
+
+    </div>
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const menu = document.getElementById("menu");
+
+      hamburger.addEventListener("click", () => {
+        menu.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

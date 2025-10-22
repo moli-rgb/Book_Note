@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Notebook</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/aos/aos.css" />
+</head>
+<body>
+  <%- include("header", { sort: sort }) %>
+
+  <div id="container">
+    <div class="head" style="color: #1E293B;">
+      <h1 class="topic">Welcome to my notebook</h1>
+      <p style="font-size: 20px;">
+        Here you can see my books and my own notes.  
+        You can put your own books and notes and edit them as you want.
+      </p>
+    </div>
+
+    <div class="cards">
+      <% covers.forEach(cover => { %>
+        <div class="card" 
+             data-aos="flip-left" 
+             data-aos-easing="ease-out-cubic" 
+             data-aos-duration="2000">
+
+          <img src="<%= cover.image_url %>" alt="book cover">
+          <h3 class="title"><%= cover.title %></h3>
+          <p class="author"><strong>Author:</strong> <%= cover.author %></p>
+          <p class="title">
+            <strong>Rating:</strong>
+            <% for (let i = 1; i <= 5; i++) { %>
+              <% if (i <= cover.rating) { %> ⭐ <% } else { %> ☆ <% } %>
+            <% } %>
+          </p>
+          <p class="note"><strong>Note:</strong> <%= cover.note ? cover.note : "No note yet" %></p>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <a href="/new"><button class="btn" style="margin-bottom:10px;">➕ add your book</button></a>
+  <a href="/book"><button class="btn_btn" style="margin-bottom:10px;">📚 your library</button></a>
+
+  <script src="/aos/aos.js"></script>
+  <script>AOS.init();</script>
+  <%- include("footer") %>
+</body>
+</html>
