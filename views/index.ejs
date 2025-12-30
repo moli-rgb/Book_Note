@@ -1,51 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Notebook</title>
+  <title>My Notebook - Premium Book Tracker</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/aos/aos.css" />
 </head>
+
 <body>
-  <%- include("header", { sort: sort }) %>
+  <%- include("header", { sort: typeof sort !=='undefined' ? sort : 'title' , page: 'index' }) %>
 
-  <div id="container">
-    <div class="head" style="color: #1E293B;">
-      <h1 class="topic">Welcome to my notebook</h1>
-      <p style="font-size: 20px;">
-        Here you can see my books and my own notes.  
-        You can put your own books and notes and edit them as you want.
-      </p>
+    <div id="container">
+      <div class="hero-text">
+        <h1>📚 My Book Collection</h1>
+        <p>
+          Discover, track, and organize your reading journey with style.
+          Your personal library, beautifully designed.
+        </p>
+      </div>
+
+      <!-- Search Filter -->
+      <div class="search-container">
+        <i data-lucide="search" class="search-icon"></i>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by title or author...">
+      </div>
+
+      <div class="cards">
+        <% covers.forEach(cover=> { %>
+          <div class="card-container">
+            <div class="card">
+              <!-- Front of Card -->
+              <div class="card-front">
+                <img src="<%= cover.image_url %>" alt="<%= cover.title %> cover">
+                <h3 class="title">
+                  Book Name: <%= cover.title %>
+                </h3>
+                <p class="author">
+                  made by: <%= cover.author %>
+                </p>
+                <div class="rating">
+                  <% for (let i=1; i <=5; i++) { %>
+                    <% if (i <=cover.rating) { %>★<% } else { %>☆<% } %>
+                          <% } %>
+                </div>
+
+                <div class="note-wrapper">
+                  <p class="note-content">
+                    <%= cover.note ? cover.note : "No note yet" %>
+                  </p>
+                  <button class="read-more-btn">Read more</button>
+                </div>
+              </div>
+
+              <!-- Back of Card -->
+              <div class="card-back">
+                <h3 class="title">
+                  <%= cover.title %>
+                </h3>
+                <p class="author">by <%= cover.author %>
+                </p>
+                <div class="rating" style="margin: 20px 0;">
+                  <% for (let i=1; i <=5; i++) { %>
+                    <% if (i <=cover.rating) { %>★<% } else { %>☆<% } %>
+                          <% } %>
+                </div>
+                <div class="full-note">
+                  <%= cover.note ? cover.note : "No notes available for this book yet." %>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 20px;">
+                  💡 Hover back to see the cover
+                </p>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+      </div>
     </div>
 
-    <div class="cards">
-      <% covers.forEach(cover => { %>
-        <div class="card" 
-             data-aos="flip-left" 
-             data-aos-easing="ease-out-cubic" 
-             data-aos-duration="2000">
-
-          <img src="<%= cover.image_url %>" alt="book cover">
-          <h3 class="title"><%= cover.title %></h3>
-          <p class="author"><strong>Author:</strong> <%= cover.author %></p>
-          <p class="title">
-            <strong>Rating:</strong>
-            <% for (let i = 1; i <= 5; i++) { %>
-              <% if (i <= cover.rating) { %> ⭐ <% } else { %> ☆ <% } %>
-            <% } %>
-          </p>
-          <p class="note"><strong>Note:</strong> <%= cover.note ? cover.note : "No note yet" %></p>
-        </div>
-      <% }) %>
+    <div class="action-buttons">
+      <a href="/new"><button class="btn-primary btn-pulse"><i data-lucide="plus-circle"></i> Add New Book</button></a>
+      <a href="/book"><button class="btn-secondary"><i data-lucide="library"></i> View Full Library</button></a>
     </div>
-  </div>
 
-  <a href="/new"><button class="btn" style="margin-bottom:10px;">➕ add your book</button></a>
-  <a href="/book"><button class="btn_btn" style="margin-bottom:10px;">📚 your library</button></a>
-
-  <script src="/aos/aos.js"></script>
-  <script>AOS.init();</script>
-  <%- include("footer") %>
+    <script src="/script.js"></script>
+    <script src="/aos/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true
+      });
+      lucide.createIcons();
+    </script>
+    <%- include("footer") %>
 </body>
+
 </html>
